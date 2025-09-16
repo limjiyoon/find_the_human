@@ -24,7 +24,10 @@ class Player(ABC):
 
     @abstractmethod
     def vote(self, player: str) -> bool:
-        """Vote for a player."""
+        """Vote for a player.
+
+        Separate it with `action` method, since it would have different restriction.
+        """
         pass
 
     @abstractmethod
