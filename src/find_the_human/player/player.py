@@ -1,3 +1,13 @@
+"""Player that decide the action during the game.
+
+Each game phase, player takes different actions.
+- Discussion Phase: chat
+- Voting Phase: vote
+- Action Phase: action
+
+At any phase, player can see the current game history on the board.
+"""
+
 from abc import ABC, abstractmethod
 
 from find_the_human.game_board import GameBoard
@@ -12,6 +22,7 @@ class Player(ABC):
     - Vote for players.
     - Take actions based on their role.
     """
+
     def __init__(self, name: str, role: Role, board: GameBoard):
         self._name = name
         self._board = board
@@ -45,6 +56,7 @@ class Player(ABC):
 
         Notes:
             If n_limit is 0 or bigger than history size, return all messages.
+
         """
         assert n_limit >= 0, f"n_limit must be non-negative, but got {n_limit}"
         return self._board.get_messages(n_limit)
@@ -60,16 +72,24 @@ class Player(ABC):
 
         Notes:
             User cannot change its role directly, it must be assigned by the GameMaster.
+
         """
         return self._role.value
 
     @property
-    def action_description(self) -> list[str]:
+    def action_description(self) -> str:
         """Get the action_description of the role."""
-        return self._role.available_actions()
+        return self._role.action_description()
 
     def __str__(self) -> str:
+        """Return the name of the player."""
         return self.name
 
     def __repr__(self) -> str:
+        """Return a string representation of the player.
+
+        Example:
+            Player(name=David, role=Human)
+
+        """
         return f"Player(name={self.name}, role={self._role})"

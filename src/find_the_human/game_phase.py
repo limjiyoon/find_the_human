@@ -4,6 +4,7 @@ The game flows like below:
 Setup -> Discussion -> Vote -> Action -> End
             ↑ ___________________|
 """
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -36,6 +37,7 @@ class GamePhase(ABC):
 
 class SetupPhase(GamePhase):
     """Assign the roles before the playing the game."""
+
     def next_phase(self, game_status: GameStatus) -> GamePhase:
         """Step next phase."""
         _ = game_status

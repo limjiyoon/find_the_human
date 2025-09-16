@@ -1,10 +1,13 @@
-from dataclasses import dataclass
+"""Game board that keeps track of the user chatting messages."""
+
 import datetime
+from dataclasses import dataclass
 
 
 @dataclass
 class Message:
     """A message sent by a player."""
+
     player: str
     msg: str
     timestamp: datetime.datetime
@@ -14,6 +17,7 @@ class Message:
 
     def __str__(self) -> str:
         return f"[{self.timestamp}] {self.player}: {self.msg}"
+
 
 class GameBoard:
     """The game board that keeps track of the user chatting messages."""
@@ -33,11 +37,11 @@ class GameBoard:
             1. Prevent modification of the original messages by users.
             2. User does not need to know the internal structure of the Message class.
             3. Easier to display messages in the UI.
+
         """
         assert n_limit >= 0, f"n_limit must be non-negative, but got {n_limit}"
 
         # Check limit is valid
-        if n_limit > len(self._messages):
-            n_limit = len(self._messages)
+        n_limit = min(n_limit, len(self._messages))
 
         return [str(msg) for msg in self._messages[-n_limit:]]
